@@ -45,3 +45,6 @@ static/uploads/*
 
 # Logs
 *.log
+
+# Test files
+*.jpg
