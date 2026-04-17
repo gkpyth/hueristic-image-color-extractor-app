@@ -1,0 +1,6 @@
+Flask==3.0.3
+Pillow==10.4.0
+numpy==2.1.1
+scikit-learn==1.5.2
+webcolors==24.8.0
+gunicorn==23.0.0
