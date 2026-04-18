@@ -24,19 +24,36 @@
 
             <!-- UPLOAD SECTION -->
             <section class="upload-section" id="upload-section">
-                <! -- Hidden file input - trigger it via a styled label below -->
-                <input type="file" id="file-input" accept="image/png, image/jpg, image/jpeg, image/webp" hidden>
+                <!-- Hidden file input - trigger it via a styled label below -->
+                <input type="file" id="file-input" accept="image/png, image/jpeg, image/webp" hidden>
 
                 <label for="file-input" class="upload-label">
                     <span class="upload-icon">+</span>
-                    <span class="upload-text">Choose an image</span>
-                    <span class="upload-hint">PNG, JPG, JPEG, or WebP · up to 10MB</span>
+                    <span class="upload-text">Choose an image or drag & drop here</span>
+                    <span class="upload-hint">PNG, JPEG, or WebP · up to 10MB</span>
                 </label>
             </section>
 
             <!-- PREVIEW SECTION - hidden until a file is selected -->
             <section class="preview-section" id="preview-section" hidden>
                 <img id="preview-image" src="" alt="Image Preview">
+
+                <!-- Slider for picking how many colors to extract. -->
+                <!-- Sits above the action buttons so users set it before extracting. -->
+                <div class="slider-group">
+                    <label for="num-colors-slider" class="slider-label">
+                        palette size: <span id="num-colors-value">8</span> colors
+                    </label>
+                    <input
+                        type="range"
+                        id="num-colors-slider"
+                        min="5"
+                        max="20"
+                        value="8"
+                        step="1"
+                    >
+                </div>
+
                 <div class="preview-controls">
                     <button id="extract-button" class="primary-button">Extract colors</button>
                     <button id="reset-button" class="secondary-button">Choose different image</button>

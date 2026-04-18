@@ -155,6 +155,13 @@ body {
     box-shadow: var(--shadow-md);
 }
 
+.upload-section.drag-active .upload-label {
+    border-color: var(--accent);
+    background: #fff;
+    transform: scale(1.01);
+    box-shadow: var(--shadow-md);
+}
+
 .upload-icon {
     font-size: 3rem;
     color: var(--accent);
@@ -415,4 +422,81 @@ body {
 .site-footer span {
     color: var(--accent);
     font-weight: 600;
+}
+
+/* ============================================
+   11. SLIDER
+   SLIDER (palette size)
+   Native range inputs are notoriously inconsistent across browsers.
+   Webkit (Chrome/Safari/Edge) and Firefox need separate selectors.
+   ============================================ */
+.slider-group {
+    margin-bottom: var(--space-lg);
+    text-align: center;
+}
+
+.slider-label {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: var(--space-sm);
+}
+
+.slider-label span {
+    font-weight: 700;
+    color: var(--accent);
+    font-family: var(--font-mono);
+}
+
+#num-colors-slider {
+    /* Reset browser defaults so we can style cleanly */
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    max-width: 320px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 999px;
+    outline: none;
+    cursor: pointer;
+}
+
+/* --- Thumb (the draggable circle) --- */
+
+/* Chrome/Safari/Edge */
+#num-colors-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--accent);
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid var(--bg-white);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-fast),
+                box-shadow var(--transition-fast);
+}
+
+#num-colors-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+    box-shadow: var(--shadow-md);
+}
+
+/* Firefox */
+#num-colors-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--accent);
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid var(--bg-white);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-fast),
+                box-shadow var(--transition-fast);
+}
+
+#num-colors-slider::-moz-range-thumb:hover {
+    transform: scale(1.15);
+    box-shadow: var(--shadow-md);
 }

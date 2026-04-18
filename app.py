@@ -24,7 +24,7 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024         # 10 MB in bytes should be plenty
 
-ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp"}
+ALLOWED_EXTENSIONS = {"png", "jpeg", "webp"}
 
 
 def is_allowed_file(filename: str) -> bool:
@@ -53,7 +53,7 @@ def extract():
 
     Expects:
         - A multipart/form-data POST with an "image" file field
-        - An optional "num_colors" form field (integer, 5-20, default 10)
+        - An optional "num_colors" form field (integer, 5-20, default 8)
 
     Returns:
         JSON with either:
@@ -73,7 +73,7 @@ def extract():
         return jsonify({"error": f"Invalid file type. Allowed types: {', '.join(sorted(ALLOWED_EXTENSIONS))}"}), 400
 
     try:
-        num_colors = int(request.form.get("num_colors", 10))
+        num_colors = int(request.form.get("num_colors", 8))
     except ValueError:
         return jsonify({"error": "Number of colors must be an integer"}), 400
 
