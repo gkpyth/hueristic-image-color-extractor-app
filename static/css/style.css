@@ -228,14 +228,44 @@ body {
 
 .secondary-button {
     background: transparent;
-    color: var(--text-muted);
-    border: 1px solid var(--border);
+    color: var(--text);
+    /* The border is transparent so the gradient behind shows through it.
+       This is the magic: we treat the border as a "window" the gradient
+       is painted through, rather than a solid colored stroke. */
+    border: 2px solid transparent;
+    border-radius: var(--radius);
+
+    /* Two backgrounds stacked:
+         Layer 1 (top): solid bg color, clipped to the padding-box (interior only)
+         Layer 2 (bottom): the hue gradient, clipped to the border-box (shows through the border)
+       background-origin tells each layer where to start painting from. */
+    background-image:
+        linear-gradient(var(--bg-white), var(--bg-white)),
+        linear-gradient(
+            135deg,
+            var(--hue-terracotta) 0%,
+            var(--hue-ochre) 35%,
+            var(--hue-dusty-rose) 65%,
+            var(--hue-indigo) 100%
+        );
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
 }
 
 .secondary-button:hover {
-    background: var(--bg-white);
-    color: var(--text);
-    border-color: var(--text-muted);
+    /* On hover, switch the interior to the warm bg for a subtle lift.
+       Gradient border stays visible the whole time. */
+    background-image:
+        linear-gradient(var(--bg), var(--bg)),
+        linear-gradient(
+            135deg,
+            var(--hue-terracotta) 0%,
+            var(--hue-ochre) 35%,
+            var(--hue-dusty-rose) 65%,
+            var(--hue-indigo) 100%
+        );
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
 }
 
 
@@ -265,9 +295,18 @@ body {
 /* ============================================
    8. PALETTE
    ============================================ */
-.palette-section h2 {
-    font-size: 1.5rem;
+.palette-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-md);
     margin-bottom: var(--space-lg);
+}
+
+.palette-header h2 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
 }
 
 .palette-grid {

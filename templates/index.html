@@ -34,7 +34,7 @@
                 </label>
             </section>
 
-            <!-- PREVIEW SECTION - hideen until a file is selected -->
+            <!-- PREVIEW SECTION - hidden until a file is selected -->
             <section class="preview-section" id="preview-section" hidden>
                 <img id="preview-image" src="" alt="Image Preview">
                 <div class="preview-controls">
@@ -51,7 +51,10 @@
 
             <!-- PALETTE RESULTS - hidden until extraction completes -->
             <section class="palette-section" id="palette-section" hidden>
-                <h2>Your palette</h2>
+                <div class="palette-header">
+                    <h2>Your palette</h2>
+                    <button id="palette-reset-button" class="secondary-button">Try another image</button>
+                </div>
                 <!-- Swatches will be dynamically injected here by main.js -->
                 <div class="palette-grid" id="palette-grid"></div>
             </section>
