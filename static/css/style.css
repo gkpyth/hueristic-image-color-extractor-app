@@ -665,3 +665,121 @@ body {
     margin: 0 auto;
     border-radius: var(--radius);
 }
+
+/* ============================================
+   15. EXPORT BAR
+   Row of small buttons for exporting the current palette in various formats.
+   Sits between the palette header and the image, visually minimal so it
+   doesn't compete with the swatches themselves.
+   ============================================ */
+.export-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    margin-top: var(--space-lg);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.export-label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-right: var(--space-xs);
+}
+
+.export-button {
+    flex: 1;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: var(--space-xs) var(--space-md);
+    background: var(--bg-white);
+    color: var(--text);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.export-button:hover {
+    background: var(--accent);
+    color: var(--bg-white);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* ============================================
+   16. INFO TOOLTIP
+   Small "i" icon next to the palette heading that reveals an
+   explanatory note on hover or focus. Helps users understand the
+   difference between exact color values and approximate color names.
+   ============================================ */
+.info-tooltip {
+    position: relative;          /* Anchor for the absolutely-positioned tooltip content */
+    display: inline-flex;
+    align-items: center;
+    margin-left: var(--space-sm);
+    cursor: help;
+    vertical-align: middle;
+}
+
+.info-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    color: var(--bg-white);
+    font-family: var(--font-body);
+    font-style: normal;
+    font-size: 0.75rem;
+    font-weight: 700;
+    transition: background var(--transition-fast);
+}
+
+.info-tooltip:hover .info-icon,
+.info-tooltip:focus .info-icon,
+.info-tooltip:focus-within .info-icon {
+    background: var(--accent);
+}
+
+.tooltip-content {
+    /* Hidden by default - revealed on hover/focus of the parent */
+    position: absolute;
+    top: calc(100% + var(--space-sm));   /* Sits below the icon with a small gap */
+    left: 0;
+    width: 320px;
+    max-width: calc(100vw - 32px);        /* Never overflow viewport on narrow screens */
+    padding: var(--space-md);
+    background: var(--text);              /* Dark background for contrast */
+    color: var(--bg-white);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.5;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    z-index: 100;
+
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-4px);
+    transition: opacity var(--transition),
+                transform var(--transition);
+}
+
+/* Show on hover OR keyboard focus of the tooltip wrapper */
+.info-tooltip:hover .tooltip-content,
+.info-tooltip:focus .tooltip-content,
+.info-tooltip:focus-within .tooltip-content {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}

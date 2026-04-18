@@ -104,20 +104,39 @@
 
             <!-- PALETTE RESULTS - hidden until extraction completes -->
             <section class="palette-section" id="palette-section" hidden>
-                <div class="palette-header">
-                    <h2>Your palette</h2>
-                    <button id="palette-reset-button" class="secondary-button">Try another image</button>
-                </div>
+            <div class="palette-header">
+                <h2>
+                    Your palette
+                    <span class="info-tooltip" tabindex="0" aria-label="About color names">
+                        <span class="info-icon">i</span>
+                        <span class="tooltip-content">
+                            Hex, RGB, and HSL values are exact. Color names are closest matches
+                            from a curated library of ~1,500 names, so similar shades may share
+                            a name — the values themselves are always accurate.
+                        </span>
+                    </span>
+                </h2>
+                <button id="palette-reset-button" class="secondary-button">Try another image</button>
+            </div>
 
-                <!-- Sticky image wrapper - stays pinned to top of viewport as user scrolls
-                     through the swatches. Gives them a constant reference point. -->
-                <div class="palette-image-wrapper">
-                    <img id="palette-image" src="" alt="Analyzed image">
-                </div>
+            <!-- Sticky image wrapper -->
+            <div class="palette-image-wrapper">
+                <img id="palette-image" src="" alt="Analyzed image">
+            </div>
 
-                <!-- Swatches will be dynamically injected here by main.js -->
-                <div class="palette-grid" id="palette-grid"></div>
-            </section>
+            <!-- Swatches grid -->
+            <div class="palette-grid" id="palette-grid"></div>
+
+            <!-- Export actions - sit below the palette so users see their results
+                 first, then take action. -->
+            <div class="export-bar">
+                <span class="export-label">Export:</span>
+                <button type="button" class="export-button" data-export="hex">Copy HEX list</button>
+                <button type="button" class="export-button" data-export="png">PNG</button>
+                <button type="button" class="export-button" data-export="css">CSS</button>
+                <button type="button" class="export-button" data-export="json">JSON</button>
+            </div>
+        </section>
 
         </main>
 
