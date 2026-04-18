@@ -500,3 +500,79 @@ body {
     transform: scale(1.15);
     box-shadow: var(--shadow-md);
 }
+
+/* ============================================
+   12. TRANSITIONS
+   Subtle fade-in on section changes. Keeps the UI feeling
+   smooth without being slow or distracting.
+   ============================================ */
+.upload-section,
+.preview-section,
+.loading-section,
+.palette-section {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Stagger the swatch reveal so the palette "cascades" in.
+   Each swatch animates a beat after the previous one. */
+.swatch {
+    animation: swatchIn 0.4s ease backwards;
+}
+
+/* Generate stagger delays for up to 20 swatches (our slider max).
+   nth-child selectors apply different delays to each swatch in the grid. */
+.swatch:nth-child(1)  { animation-delay: 0.00s; }
+.swatch:nth-child(2)  { animation-delay: 0.03s; }
+.swatch:nth-child(3)  { animation-delay: 0.06s; }
+.swatch:nth-child(4)  { animation-delay: 0.09s; }
+.swatch:nth-child(5)  { animation-delay: 0.12s; }
+.swatch:nth-child(6)  { animation-delay: 0.15s; }
+.swatch:nth-child(7)  { animation-delay: 0.18s; }
+.swatch:nth-child(8)  { animation-delay: 0.21s; }
+.swatch:nth-child(9)  { animation-delay: 0.24s; }
+.swatch:nth-child(10) { animation-delay: 0.27s; }
+.swatch:nth-child(11) { animation-delay: 0.30s; }
+.swatch:nth-child(12) { animation-delay: 0.33s; }
+.swatch:nth-child(13) { animation-delay: 0.36s; }
+.swatch:nth-child(14) { animation-delay: 0.39s; }
+.swatch:nth-child(15) { animation-delay: 0.42s; }
+.swatch:nth-child(16) { animation-delay: 0.45s; }
+.swatch:nth-child(17) { animation-delay: 0.48s; }
+.swatch:nth-child(18) { animation-delay: 0.51s; }
+.swatch:nth-child(19) { animation-delay: 0.54s; }
+.swatch:nth-child(20) { animation-delay: 0.57s; }
+
+@keyframes swatchIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Respect users who've opted out of motion at the OS level.
+   Accessibility standard — people with vestibular disorders can
+   get nauseated by sliding/scaling animations. */
+@media (prefers-reduced-motion: reduce) {
+    .upload-section,
+    .preview-section,
+    .loading-section,
+    .palette-section,
+    .swatch {
+        animation: none;
+    }
+}
