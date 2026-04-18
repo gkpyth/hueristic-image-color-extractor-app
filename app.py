@@ -13,6 +13,9 @@ from werkzeug.utils import secure_filename
 
 from extractor import extract_colors
 
+from datetime import datetime
+
+
 # Flask app configuration
 app = Flask(__name__)
 
@@ -38,9 +41,9 @@ def is_allowed_file(filename: str) -> bool:
 @app.route("/")
 def index():
     """
-    Serve the man page.
+    Serve the main page.
     """
-    return render_template("index.html")
+    return render_template("index.html", current_year=datetime.now().year)
 
 
 @app.route("/extract", methods=["POST"])

@@ -1,10 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Hueristic - Extract Color Palettes from Any Image</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    </head>
 
-</body>
+    <body>
+        <!-- HEADER -->
+        <header class="site-header">
+            <h1 class="logo">
+                <span class="logo-hue">Hue</span><span class="logo-ristic">ristic</span>
+            </h1>
+            <p class="tagline">Extract color palettes from any image.</p>
+        </header>
+
+        <!-- MAIN CONTENT -->
+        <main class="container">
+
+            <!-- UPLOAD SECTION -->
+            <section class="upload-section" id="upload-section">
+                <! -- Hidden file input - trigger it via a styled label below -->
+                <input type="file" id="file-input" accept="image/png, image/jpg, image/jpeg, image/webp" hidden>
+
+                <label for="file-input" class="upload-label">
+                    <span class="upload-icon">+</span>
+                    <span class="upload-text">Choose an image</span>
+                    <span class="upload-hint">PNG, JPG, JPEG, or WebP · up to 10MB</span>
+                </label>
+            </section>
+
+            <!-- PREVIEW SECTION - hideen until a file is selected -->
+            <section class="preview-section" id="preview-section" hidden>
+                <img id="preview-image" src="" alt="Image Preview">
+                <div class="preview-controls">
+                    <button id="extract-button" class="primary-button">Extract colors</button>
+                    <button id="reset-button" class="secondary-button">Choose different image</button>
+                </div>
+            </section>
+
+            <!-- LOADING STATE - hidden until extraction starts -->
+            <section class="loading-section" id="loading-section" hidden>
+                <div class="spinner"></div>
+                <p>Analyzing colors...</p>
+            </section>
+
+            <!-- PALETTE RESULTS - hidden until extraction completes -->
+            <section class="palette-section" id="palette-section" hidden>
+                <h2>Your palette</h2>
+                <!-- Swatches will be dynamically injected here by main.js -->
+                <div class="palette-grid" id="palette-grid"></div>
+            </section>
+
+        </main>
+
+        <!-- SITE FOOTER -->
+        <footer class="site-footer">
+            <p>Built with Python & Flask by <span>Ghaleb Khadra</span> &middot; {{ current_year }}</p>
+        </footer>
+
+        <!-- TOAST - floating notification for copy confirmations, errors, etc. -->
+        <div class="toast" id="toast"></div>
+
+        <!-- Javascript -->
+        <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+
+    </body>
 </html>
