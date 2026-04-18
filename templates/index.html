@@ -108,6 +108,13 @@
                     <h2>Your palette</h2>
                     <button id="palette-reset-button" class="secondary-button">Try another image</button>
                 </div>
+
+                <!-- Sticky image wrapper - stays pinned to top of viewport as user scrolls
+                     through the swatches. Gives them a constant reference point. -->
+                <div class="palette-image-wrapper">
+                    <img id="palette-image" src="" alt="Analyzed image">
+                </div>
+
                 <!-- Swatches will be dynamically injected here by main.js -->
                 <div class="palette-grid" id="palette-grid"></div>
             </section>

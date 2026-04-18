@@ -15,7 +15,8 @@ const paletteSection    = document.getElementById("palette-section");
 const paletteGrid       = document.getElementById("palette-grid");
 const toast             = document.getElementById("toast");
 const numColorsSlider   = document.getElementById("num-colors-slider");
-const numColorsValue    = document.getElementById("num-colors-value")
+const numColorsValue    = document.getElementById("num-colors-value");
+const paletteImage      = document.getElementById("palette-image");
 
 // Keep a reference to the currently selected File object.
 // This is needed when the user clicks "Extract colors" since the input's
@@ -233,6 +234,8 @@ extractButton.addEventListener("click", async () => {
             throw new Error(data.error || "Extraction failed");
         }
 
+        paletteImage.src = previewImage.src;
+
         renderPalette(data.colors);
         showSection(paletteSection);
 
@@ -316,10 +319,12 @@ function resetApp() {
     fileInput.value = "";
 
     // Revoke the blob URL to free memory the browser held for the preview.
-    if (previewImage.src) {
+    if (previewImage.src && previewImage.src.startsWith("blob:")) {
         URL.revokeObjectURL(previewImage.src);
         previewImage.src = "";
     }
+
+    paletteImage.src = "";
 
     showSection(uploadSection);
 }
