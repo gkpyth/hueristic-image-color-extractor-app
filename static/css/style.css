@@ -576,3 +576,66 @@ body {
         animation: none;
     }
 }
+
+/* ============================================
+   13. SAMPLES
+   Small thumbnail strip below the upload zone for
+   one-click demos. Quietly beautiful, not attention-grabbing.
+   ============================================ */
+.samples {
+    margin-top: var(--space-md);
+    padding: var(--space-md);
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+.samples-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: var(--space-sm);
+    text-align: center;
+    font-style: italic;
+}
+
+.samples-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);  /* 4 equal columns, full width */
+    gap: var(--space-sm);
+}
+
+/* Reset button defaults since these are <button> elements */
+.sample-thumb {
+    padding: 0;
+    border: 2px solid transparent;
+    background: none;
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    aspect-ratio: 16 / 10;  /* Wider than square - feels more balanced in a row */
+    transition: border-color var(--transition-fast),
+                transform var(--transition-fast),
+                box-shadow var(--transition-fast);
+}
+
+.sample-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(90%) brightness(0.95);
+    transition: filter var(--transition) ease;
+}
+
+.sample-thumb:hover img,
+.sample-thumb:focus-visible img {
+    filter: grayscale(0%) brightness(1);
+}
+
+.sample-thumb:hover,
+.sample-thumb:focus-visible {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    outline: none;
+}

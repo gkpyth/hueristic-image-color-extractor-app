@@ -156,7 +156,42 @@ document.addEventListener("paste", (e) => {
 
 
 // ============================================
-// 4. SLIDER
+// 4. SAMPLE IMAGES
+// One-click demos: fetch the sample file from /static, convert to
+// a File object, and feed it through the normal selection flow.
+// ============================================
+document.querySelectorAll(".sample-thumb").forEach(thumb => {
+    thumb.addEventListener("click", async () => {
+        const src = thumb.dataset.src;
+
+        try {
+            // Fetch the image as binary data (a "blob" = Binary Large OBject).
+            // Same-origin fetch, no CORS concerns since it's on our server.
+            const response = await fetch(src);
+            if (!response.ok) throw new Error("Failed to load sample");
+
+            const blob = await response.blob();
+
+            // Extract a filename from the URL path, e.g. "sunset.jpg" from
+            // "/static/images/samples/sunset.jpg".
+            const filename = src.split("/").pop();
+
+            // Wrap the blob in a File object so it has a filename and type —
+            // this makes it indistinguishable from a real upload downstream.
+            const file = new File([blob], filename, { type: blob.type });
+
+            handleFileSelection(file);
+
+        } catch (error) {
+            console.error("Sample load error:", error);
+            showToast("Couldn't load sample image", true);
+        }
+    });
+});
+
+
+// ============================================
+// 5. SLIDER
 // Live-update the displayed number as the user drags.
 // The actual value is read at extraction time.
 // ============================================
@@ -166,7 +201,7 @@ numColorsSlider.addEventListener("input", () => {
 
 
 // ============================================
-// 5. EXTRACTION
+// 6. EXTRACTION
 // ============================================
 
 extractButton.addEventListener("click", async () => {
@@ -210,7 +245,7 @@ extractButton.addEventListener("click", async () => {
 
 
 // ============================================
-// 6. PALETTE RENDERING
+// 7. PALETTE RENDERING
 // ============================================
 
 /**
@@ -253,7 +288,7 @@ function renderPalette(colors) {
 
 
 // ============================================
-// 7. CLIPBOARD
+// 8. CLIPBOARD
 // ============================================
 
 /**
@@ -273,7 +308,7 @@ async function copyToClipboard(text) {
 
 
 // ============================================
-// 8. RESET
+// 9. RESET
 // ============================================
 
 function resetApp() {

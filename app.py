@@ -24,7 +24,7 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024         # 10 MB in bytes should be plenty
 
-ALLOWED_EXTENSIONS = {"png", "jpeg", "webp"}
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp"}
 
 
 def is_allowed_file(filename: str) -> bool:

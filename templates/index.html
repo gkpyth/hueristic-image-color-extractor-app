@@ -25,13 +25,49 @@
             <!-- UPLOAD SECTION -->
             <section class="upload-section" id="upload-section">
                 <!-- Hidden file input - trigger it via a styled label below -->
-                <input type="file" id="file-input" accept="image/png, image/jpeg, image/webp" hidden>
+                <input type="file" id="file-input" accept="image/png, image/jpg, image/jpeg, image/webp" hidden>
 
                 <label for="file-input" class="upload-label">
                     <span class="upload-icon">+</span>
                     <span class="upload-text">Choose an image or drag & drop here</span>
                     <span class="upload-hint">PNG, JPEG, or WebP · up to 10MB</span>
                 </label>
+
+            <!-- Sample images - one-click demos for visitors without an image handy. -->
+            <!-- data-src holds the path so main.js can fetch and process it like -->
+            <!-- a regular upload. data-credit is shown in a tooltip on hover. -->
+            <div class="samples">
+                <p class="samples-label">or try one of these</p>
+                <div class="samples-grid">
+                    <button type="button" class="sample-thumb"
+                            data-src="{{ url_for('static', filename='images/samples/sunset.jpg') }}"
+                            data-credit="Photo by Johannes Plenio on Unsplash"
+                            title="Photo by Johannes Plenio on Unsplash">
+                        <img src="{{ url_for('static', filename='images/samples/sunset.jpg') }}" alt="Sunset landscape">
+                    </button>
+
+                    <button type="button" class="sample-thumb"
+                            data-src="{{ url_for('static', filename='images/samples/abstract.jpg') }}"
+                            data-credit="Photo by Milad Fakurian on Unsplash"
+                            title="Photo by Milad Fakurian on Unsplash">
+                        <img src="{{ url_for('static', filename='images/samples/abstract.jpg') }}" alt="Abstract gradient">
+                    </button>
+
+                    <button type="button" class="sample-thumb"
+                            data-src="{{ url_for('static', filename='images/samples/portrait.jpg') }}"
+                            data-credit="Photo by Slav Romanov on Unsplash"
+                            title="Photo by Slav Romanov on Unsplash">
+                        <img src="{{ url_for('static', filename='images/samples/portrait.jpg') }}" alt="Fashion portrait">
+                    </button>
+
+                    <button type="button" class="sample-thumb"
+                            data-src="{{ url_for('static', filename='images/samples/food.jpg') }}"
+                            data-credit="Photo by Anna Pelzer on Unsplash"
+                            title="Photo by Anna Pelzer on Unsplash">
+                        <img src="{{ url_for('static', filename='images/samples/food.jpg') }}" alt="Food flatlay">
+                    </button>
+                </div>
+            </div>
             </section>
 
             <!-- PREVIEW SECTION - hidden until a file is selected -->
