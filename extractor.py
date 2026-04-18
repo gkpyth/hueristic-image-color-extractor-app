@@ -113,15 +113,3 @@ def extract_colors(image_path: str, num_colors: int = 10) -> list[dict]:
     colors.sort(key=lambda x: x["percentage"], reverse=True)
 
     return colors
-
-if __name__ == "__main__":
-    palette = extract_colors("test.jpg")
-    for color in palette:
-        print(f"{color['hex']}  |  RGB {color['rgb']}  |  HSL {color['hsl']}  |  {color['name']:<20}  |  {color['percentage']:>5.2f}%")
-
-    # result = extract_colors("test.jpg")
-    # for color, pct in result:
-    #     print(f"RGB {color.astype(int)} -> {pct:.2f}%")
-    # print(rgb_to_hex((16, 123, 177)))
-    # print(rgb_to_hsl((16, 123, 177)))
-    # print(get_color_name("#107bb1"))
