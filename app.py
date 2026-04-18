@@ -97,5 +97,18 @@ def extract():
         if os.path.exists(save_path):
             os.remove(save_path)
 
+
+@app.errorhandler(413)
+def handle_file_too_large(error):
+    """
+    Return a clean JSON response when an uploaded file exceeds MAX_CONTENT_LENGTH.
+    Without this, Flask returns a default HTML error page that our frontend can't parse.
+    """
+    max_mb = app.config["MAX_CONTENT_LENGTH"] // (1024 * 1024)
+    return jsonify({
+        "error": f"File too large. Maximum size is {max_mb}MB."
+    }), 413
+
+
 if __name__ == "__main__":
     app.run(debug=True)

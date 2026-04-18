@@ -17,6 +17,7 @@ const toast             = document.getElementById("toast");
 const numColorsSlider   = document.getElementById("num-colors-slider");
 const numColorsValue    = document.getElementById("num-colors-value");
 const paletteImage      = document.getElementById("palette-image");
+const MAX_FILE_SIZE     = 10 * 1024 * 1024
 
 // Keep a reference to the currently selected File object.
 // This is needed when the user clicks "Extract colors" since the input's
@@ -72,6 +73,15 @@ function showSection(sectionToShow) {
  * Sets the preview and transitions to the preview section.
  */
 function handleFileSelection(file) {
+    // Reject oversized files client-side before even trying to upload
+    if (file.size > MAX_FILE_SIZE) {
+        const maxMB = MAX_FILE_SIZE / (1024 * 1024);
+        const fileMB = (file.size / (1024 * 1024)).toFixed(1);
+        showToast(`File too large (${fileMB}MB). Maximum is ${maxMB}MB.`, true);
+        fileInput.value = "";
+        return false;
+    }
+
     selectedFile = file;
 
     // Revoke any previous object URL before creating a new one, to avoid
@@ -82,6 +92,7 @@ function handleFileSelection(file) {
 
     previewImage.src = URL.createObjectURL(file);
     showSection(previewSection);
+    return true;
 }
 
 fileInput.addEventListener("change", (event) => {
@@ -147,8 +158,7 @@ document.addEventListener("paste", (e) => {
         if (item.type.startsWith("image/")) {
             const file = item.getAsFile();
             if (file) {
-                handleFileSelection(file);
-                showToast("Image pasted from clipboard");
+                if (handleFileSelection(file)) showToast("Image pasted from clipboard");
                 return;
             }
         }
@@ -226,7 +236,12 @@ extractButton.addEventListener("click", async () => {
             body: formData,
         });
 
-        const data = await response.json();
+        let data;
+        try {
+            data = await response.json();
+        } catch {
+            data = { error: "Unexpected server response" }
+        }
 
         // fetch() doesn't throw on HTTP errors (400, 500, etc.) - only on
         // network failures. Gotta check response.ok myself.
@@ -235,7 +250,6 @@ extractButton.addEventListener("click", async () => {
         }
 
         paletteImage.src = previewImage.src;
-
         renderPalette(data.colors);
         showSection(paletteSection);
 
