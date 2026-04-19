@@ -1,113 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Hueristic - Extract Color Palettes from Any Image</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hueristic - Extract Color Palettes from Any Image</title>
+    <!-- SEO & link preview metadata -->
+    <meta name="description"
+          content="Extract dominant color palettes from any image. Upload, drag, or paste to get HEX, RGB, HSL, and named colors — plus exports in CSS, JSON, and PNG.">
+    <meta name="theme-color" content="#C4622D">
 
-    <body>
-        <!-- HEADER -->
-        <header class="site-header">
-            <h1 class="logo">
-                <span class="logo-hue">Hue</span><span class="logo-ristic">ristic</span>
-            </h1>
-            <p class="tagline">Extract color palettes from any image.</p>
-        </header>
+    <!-- Open Graph (Facebook, LinkedIn, Slack, iMessage, Discord link previews) -->
+    <meta property="og:title" content="Hueristic — Extract Color Palettes from Any Image">
+    <meta property="og:description"
+          content="Extract dominant color palettes from any image. Upload, drag, or paste to get HEX, RGB, HSL, and named colors.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{{ url_for('static', filename='images/og-preview.png', _external=True) }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
-        <!-- MAIN CONTENT -->
-        <main class="container">
+    <!-- Twitter card (Twitter/X uses its own tag set) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Hueristic — Extract Color Palettes from Any Image">
+    <meta name="twitter:description" content="Extract dominant color palettes from any image.">
+    <meta name="twitter:image" content="{{ url_for('static', filename='images/og-preview.png', _external=True) }}">
 
-            <!-- UPLOAD SECTION -->
-            <section class="upload-section" id="upload-section">
-                <!-- Hidden file input - trigger it via a styled label below -->
-                <input type="file" id="file-input" accept="image/png, image/jpg, image/jpeg, image/webp" hidden>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
+          rel="stylesheet">
+    <link rel="icon" type="image/svg+xml"
+          href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23C4622D'/%3E%3Cstop offset='0.3' stop-color='%23D89242'/%3E%3Cstop offset='0.55' stop-color='%23B8524E'/%3E%3Cstop offset='0.85' stop-color='%234A5880'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='42' fill='url(%23g)'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
 
-                <label for="file-input" class="upload-label">
-                    <span class="upload-icon">+</span>
-                    <span class="upload-text">Add an image</span>
-                    <span class="upload-hint">Click, drag & drop, or paste · PNG, JPEG, or WebP · up to 10MB</span>
-                </label>
+<body>
+<!-- HEADER -->
+<header class="site-header">
+    <h1 class="logo">
+        <span class="logo-hue">Hue</span><span class="logo-ristic">ristic</span>
+    </h1>
+    <p class="tagline">Extract color palettes from any image.</p>
+</header>
 
-            <!-- Sample images - one-click demos for visitors without an image handy. -->
-            <!-- data-src holds the path so main.js can fetch and process it like -->
-            <!-- a regular upload. data-credit is shown in a tooltip on hover. -->
-            <div class="samples">
-                <p class="samples-label">or try one of these</p>
-                <div class="samples-grid">
-                    <button type="button" class="sample-thumb"
-                            data-src="{{ url_for('static', filename='images/samples/sunset.jpg') }}"
-                            data-credit="Photo by Johannes Plenio on Unsplash"
-                            title="Photo by Johannes Plenio on Unsplash">
-                        <img src="{{ url_for('static', filename='images/samples/sunset.jpg') }}" alt="Sunset landscape">
-                    </button>
+<!-- MAIN CONTENT -->
+<main class="container">
 
-                    <button type="button" class="sample-thumb"
-                            data-src="{{ url_for('static', filename='images/samples/abstract.jpg') }}"
-                            data-credit="Photo by Milad Fakurian on Unsplash"
-                            title="Photo by Milad Fakurian on Unsplash">
-                        <img src="{{ url_for('static', filename='images/samples/abstract.jpg') }}" alt="Abstract gradient">
-                    </button>
+    <!-- UPLOAD SECTION -->
+    <section class="upload-section" id="upload-section">
+        <!-- Hidden file input - trigger it via a styled label below -->
+        <input type="file" id="file-input" accept="image/png, image/jpg, image/jpeg, image/webp" hidden>
 
-                    <button type="button" class="sample-thumb"
-                            data-src="{{ url_for('static', filename='images/samples/portrait.jpg') }}"
-                            data-credit="Photo by Slav Romanov on Unsplash"
-                            title="Photo by Slav Romanov on Unsplash">
-                        <img src="{{ url_for('static', filename='images/samples/portrait.jpg') }}" alt="Fashion portrait">
-                    </button>
+        <label for="file-input" class="upload-label">
+            <span class="upload-icon">+</span>
+            <span class="upload-text">Add an image</span>
+            <span class="upload-hint">Click, drag & drop, or paste · PNG, JPEG, or WebP · up to 10MB</span>
+        </label>
 
-                    <button type="button" class="sample-thumb"
-                            data-src="{{ url_for('static', filename='images/samples/food.jpg') }}"
-                            data-credit="Photo by Anna Pelzer on Unsplash"
-                            title="Photo by Anna Pelzer on Unsplash">
-                        <img src="{{ url_for('static', filename='images/samples/food.jpg') }}" alt="Food flatlay">
-                    </button>
-                </div>
+        <!-- Sample images - one-click demos for visitors without an image handy. -->
+        <!-- data-src holds the path so main.js can fetch and process it like -->
+        <!-- a regular upload. data-credit is shown in a tooltip on hover. -->
+        <div class="samples">
+            <p class="samples-label">or try one of these</p>
+            <div class="samples-grid">
+                <button type="button" class="sample-thumb"
+                        data-src="{{ url_for('static', filename='images/samples/sunset.jpg') }}"
+                        data-credit="Photo by Johannes Plenio on Unsplash"
+                        title="Photo by Johannes Plenio on Unsplash">
+                    <img src="{{ url_for('static', filename='images/samples/sunset.jpg') }}" alt="Sunset landscape">
+                </button>
+
+                <button type="button" class="sample-thumb"
+                        data-src="{{ url_for('static', filename='images/samples/abstract.jpg') }}"
+                        data-credit="Photo by Milad Fakurian on Unsplash"
+                        title="Photo by Milad Fakurian on Unsplash">
+                    <img src="{{ url_for('static', filename='images/samples/abstract.jpg') }}" alt="Abstract gradient">
+                </button>
+
+                <button type="button" class="sample-thumb"
+                        data-src="{{ url_for('static', filename='images/samples/portrait.jpg') }}"
+                        data-credit="Photo by Slav Romanov on Unsplash"
+                        title="Photo by Slav Romanov on Unsplash">
+                    <img src="{{ url_for('static', filename='images/samples/portrait.jpg') }}" alt="Fashion portrait">
+                </button>
+
+                <button type="button" class="sample-thumb"
+                        data-src="{{ url_for('static', filename='images/samples/food.jpg') }}"
+                        data-credit="Photo by Anna Pelzer on Unsplash"
+                        title="Photo by Anna Pelzer on Unsplash">
+                    <img src="{{ url_for('static', filename='images/samples/food.jpg') }}" alt="Food flatlay">
+                </button>
             </div>
-            </section>
+        </div>
+    </section>
 
-            <!-- PREVIEW SECTION - hidden until a file is selected -->
-            <section class="preview-section" id="preview-section" hidden>
-                <img id="preview-image" src="" alt="Image Preview">
+    <!-- PREVIEW SECTION - hidden until a file is selected -->
+    <section class="preview-section" id="preview-section" hidden>
+        <img id="preview-image" src="" alt="Image Preview">
 
-                <!-- Slider for picking how many colors to extract. -->
-                <!-- Sits above the action buttons so users set it before extracting. -->
-                <div class="slider-group">
-                    <label for="num-colors-slider" class="slider-label">
-                        palette size: <span id="num-colors-value">8</span> colors
-                    </label>
-                    <input
-                        type="range"
-                        id="num-colors-slider"
-                        min="5"
-                        max="20"
-                        value="8"
-                        step="1"
-                    >
-                </div>
+        <!-- Slider for picking how many colors to extract. -->
+        <!-- Sits above the action buttons so users set it before extracting. -->
+        <div class="slider-group">
+            <label for="num-colors-slider" class="slider-label">
+                palette size: <span id="num-colors-value">8</span> colors
+            </label>
+            <input
+                    type="range"
+                    id="num-colors-slider"
+                    min="5"
+                    max="20"
+                    value="8"
+                    step="1"
+            >
+        </div>
 
-                <div class="preview-controls">
-                    <button id="extract-button" class="primary-button">Extract colors</button>
-                    <button id="reset-button" class="secondary-button">Choose different image</button>
-                </div>
-            </section>
+        <div class="preview-controls">
+            <button id="extract-button" class="primary-button">Extract colors</button>
+            <button id="reset-button" class="secondary-button">Choose different image</button>
+        </div>
+    </section>
 
-            <!-- LOADING STATE - hidden until extraction starts -->
-            <section class="loading-section" id="loading-section" hidden>
-                <div class="spinner"></div>
-                <p>Analyzing colors...</p>
-            </section>
+    <!-- LOADING STATE - hidden until extraction starts -->
+    <section class="loading-section" id="loading-section" hidden>
+        <div class="spinner"></div>
+        <p>Analyzing colors...</p>
+    </section>
 
-            <!-- PALETTE RESULTS - hidden until extraction completes -->
-            <section class="palette-section" id="palette-section" hidden>
-            <div class="palette-header">
-                <h2>
-                    Your palette
-                    <span class="info-tooltip" tabindex="0" aria-label="About color names">
+    <!-- PALETTE RESULTS - hidden until extraction completes -->
+    <section class="palette-section" id="palette-section" hidden>
+        <div class="palette-header">
+            <h2>
+                Your palette
+                <span class="info-tooltip" tabindex="0" aria-label="About color names">
                         <span class="info-icon">i</span>
                         <span class="tooltip-content">
                             Hex, RGB, and HSL values are exact. Color names are closest matches
@@ -115,41 +138,41 @@
                             a name — the values themselves are always accurate.
                         </span>
                     </span>
-                </h2>
-                <button id="palette-reset-button" class="secondary-button">Try another image</button>
-            </div>
+            </h2>
+            <button id="palette-reset-button" class="secondary-button">Try another image</button>
+        </div>
 
-            <!-- Sticky image wrapper -->
-            <div class="palette-image-wrapper">
-                <img id="palette-image" src="" alt="Analyzed image">
-            </div>
+        <!-- Sticky image wrapper -->
+        <div class="palette-image-wrapper">
+            <img id="palette-image" src="" alt="Analyzed image">
+        </div>
 
-            <!-- Swatches grid -->
-            <div class="palette-grid" id="palette-grid"></div>
+        <!-- Swatches grid -->
+        <div class="palette-grid" id="palette-grid"></div>
 
-            <!-- Export actions - sit below the palette so users see their results
-                 first, then take action. -->
-            <div class="export-bar">
-                <span class="export-label">Export:</span>
-                <button type="button" class="export-button" data-export="hex">Copy HEX list</button>
-                <button type="button" class="export-button" data-export="png">PNG</button>
-                <button type="button" class="export-button" data-export="css">CSS</button>
-                <button type="button" class="export-button" data-export="json">JSON</button>
-            </div>
-        </section>
+        <!-- Export actions - sit below the palette so users see their results
+             first, then take action. -->
+        <div class="export-bar">
+            <span class="export-label">Export:</span>
+            <button type="button" class="export-button" data-export="hex">Copy HEX list</button>
+            <button type="button" class="export-button" data-export="png">PNG</button>
+            <button type="button" class="export-button" data-export="css">CSS</button>
+            <button type="button" class="export-button" data-export="json">JSON</button>
+        </div>
+    </section>
 
-        </main>
+</main>
 
-        <!-- SITE FOOTER -->
-        <footer class="site-footer">
-            <p>Built with Python & Flask by <span>Ghaleb Khadra</span> &middot; {{ current_year }}</p>
-        </footer>
+<!-- SITE FOOTER -->
+<footer class="site-footer">
+    <p>Built with Python & Flask by <span>Ghaleb Khadra</span> &middot; {{ current_year }}</p>
+</footer>
 
-        <!-- TOAST - floating notification for copy confirmations, errors, etc. -->
-        <div class="toast" id="toast"></div>
+<!-- TOAST - floating notification for copy confirmations, errors, etc. -->
+<div class="toast" id="toast"></div>
 
-        <!-- Javascript -->
-        <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+<!-- Javascript -->
+<script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
 
-    </body>
+</body>
 </html>
