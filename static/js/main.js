@@ -17,7 +17,8 @@ const toast             = document.getElementById("toast");
 const numColorsSlider   = document.getElementById("num-colors-slider");
 const numColorsValue    = document.getElementById("num-colors-value");
 const paletteImage      = document.getElementById("palette-image");
-const MAX_FILE_SIZE     = 10 * 1024 * 1024
+const MAX_FILE_SIZE     = 10 * 1024 * 1024;
+const ALLOWED_EXTENSIONS = ["png", "jpg", "jpeg", "webp"];
 
 // Keep a reference to the currently selected File object.
 // This is needed when the user clicks "Extract colors" since the input's
@@ -73,6 +74,17 @@ function showSection(sectionToShow) {
  * Sets the preview and transitions to the preview section.
  */
 function handleFileSelection(file) {
+    // Reject unsupported file types before showing the preview
+    const extension = file.name.split(".").pop().toLowerCase();
+    if (!ALLOWED_EXTENSIONS.includes(extension)) {
+        showToast(
+            `Unsupported file type. Allowed: ${ALLOWED_EXTENSIONS.join(", ")}`,
+            true
+        );
+        fileInput.value = "";
+        return false;
+    }
+
     // Reject oversized files client-side before even trying to upload
     if (file.size > MAX_FILE_SIZE) {
         const maxMB = MAX_FILE_SIZE / (1024 * 1024);
@@ -97,7 +109,12 @@ function handleFileSelection(file) {
 
 fileInput.addEventListener("change", (event) => {
     const file = event.target.files[0];
-    if (file) handleFileSelection(file);
+    console.log("Browse path - file:", file);
+    if (file) {
+        console.log("Browse path - filename:", file.name);
+        console.log("Browse path - extension:", file.name.split(".").pop().toLowerCase());
+        handleFileSelection(file);
+    }
 });
 
 
@@ -158,9 +175,20 @@ document.addEventListener("paste", (e) => {
         if (item.type.startsWith("image/")) {
             const file = item.getAsFile();
             if (file) {
-                if (handleFileSelection(file)) showToast("Image pasted from clipboard");
+                const success = handleFileSelection(file);
+                if (success) {
+                    showToast("Image pasted from clipboard");
+                }
                 return;
             }
+        }
+    }
+
+    // No image found but if clipboard had something else (text, pdf, etc.) just not image, give user feedback
+    if (items.length > 0) {
+        const activeTag = document.activeElement?.tagName;
+        if (activeTag !== "INPUT" && activeTag !== "TEXTAREA") {
+            showToast("Clipboard doesn't contain an image", true);
         }
     }
 });
