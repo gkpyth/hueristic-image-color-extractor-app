@@ -10,11 +10,13 @@ import os
 import uuid
 from flask import Flask, render_template, request, jsonify
 from werkzeug.utils import secure_filename
+from dotenv import load_dotenv
 
 from extractor import extract_colors
 
 from datetime import datetime
 
+load_dotenv()
 
 # Flask app configuration
 app = Flask(__name__)
@@ -111,4 +113,4 @@ def handle_file_too_large(error):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=os.getenv("FLASK_DEBUG") == "1")
