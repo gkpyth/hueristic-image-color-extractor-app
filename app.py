@@ -27,7 +27,7 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 # Create the uploads directory if it doesn't exist
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024         # 10 MB in bytes should be plenty
+app.config["MAX_CONTENT_LENGTH"] = 6 * 1024 * 1024         # 10 MB in bytes should be plenty
 
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp"}
 

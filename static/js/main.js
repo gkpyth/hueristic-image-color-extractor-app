@@ -17,7 +17,7 @@ const toast             = document.getElementById("toast");
 const numColorsSlider   = document.getElementById("num-colors-slider");
 const numColorsValue    = document.getElementById("num-colors-value");
 const paletteImage      = document.getElementById("palette-image");
-const MAX_FILE_SIZE     = 10 * 1024 * 1024;
+const MAX_FILE_SIZE     = 6 * 1024 * 1024;
 const ALLOWED_EXTENSIONS = ["png", "jpg", "jpeg", "webp"];
 
 // Keep a reference to the currently selected File object.
