@@ -22,6 +22,7 @@ load_dotenv()
 app = Flask(__name__)
 
 UPLOAD_FOLDER = os.path.join(app.root_path, "static", "uploads")
+app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY', 'dev-key-change-in-production')
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 # Create the uploads directory if it doesn't exist

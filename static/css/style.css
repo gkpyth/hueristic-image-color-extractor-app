@@ -89,7 +89,7 @@ body {
 .logo {
     font-family: var(--font-heading);  /* Syne for the logo */
     font-size: 3rem;                    /* Bigger — it's a brand moment */
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: -0.02em;
     margin-bottom: var(--space-sm);
 }
